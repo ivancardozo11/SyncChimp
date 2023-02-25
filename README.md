@@ -1,4 +1,14 @@
-# SyncChimp-
+# SyncChimp
+
+<p align="center">
+  
+  <img src="Tradesocket.png" width="500" height="300">
+  
+</p>
+<p align="center"><i>This image was generated with Dall-e 2 AI</i></p>
+
+<br><br><br>
+
 SyncChimp syncs contacts from MockAPI to Mailchimp. It retrieves contact data from MockAPI and creates new members in a new Mailchimp list. Keep your email lists updated in real-time with SyncChimp.
 
 
