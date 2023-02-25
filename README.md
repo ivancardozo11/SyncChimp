@@ -183,17 +183,21 @@ See `Dockerfile` and `docker-compose.yml` for more details.
 
 │   │   ├── services/
 
-│   │   │   └── syncService.ts
+│   │   │   ├── syncService.ts
+
+│   │   │   └── mailchimp.ts
+
+│   │   ├── types/
+
+│   │   │   ├── syncedContacts.ts
+
+│   │   │   └── contacts.ts
 
 │   ├── database/
 
 │   │   └── config.ts
 
 │   ├── docker/
-
-│   │   ├── db/
-
-│   │   │   └── Dockerfile
  
 │   │   ├── api/
 
@@ -207,10 +211,6 @@ See `Dockerfile` and `docker-compose.yml` for more details.
 
 │   │   │   └── sync.test.ts
 
-│   │   ├── database/
-
-│   │   │   └── config.test.ts
-
 ├── .dockerignore
 
 ├── .gitignore
@@ -220,6 +220,8 @@ See `Dockerfile` and `docker-compose.yml` for more details.
 ├── index.ts
 
 ├── LICENSE
+
+├── mailchimp.config.ts
 
 ├── package.json
 

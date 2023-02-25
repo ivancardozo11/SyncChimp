@@ -12,6 +12,6 @@
         "*": ["node_modules/*", "src/common/*"]
       }
     },
-    "include": ["src/**/*"],
+    "include": ["src/**/*.ts","index.ts"],
     "exclude": ["node_modules", "dist"]
   }
