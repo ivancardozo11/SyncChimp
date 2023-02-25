@@ -2,7 +2,7 @@
 
 <p align="center">
   
-  <img src="SyncChimpLogo.png" width="500" height="300">
+  <img src="SyncChimpLogo.png" width="500" height="400">
   
 </p>
 <p align="center"><i>This image was generated with Dall-e 2 AI</i></p>
