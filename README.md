@@ -22,17 +22,12 @@ Is responsible for receiving and processing user requests, passing them to the a
 * The application layer (services/):
 Contains the application logic that processes user requests. It communicates with the data layer to perform CRUD operations on the database. It's responsible for implementing business rules and orchestrating the data retrieval and data processing.
 
-* The data layer (database/):
-Is responsible for interacting with the database to manage and retrieve data. It provides an abstraction layer between the application layer and the database, which makes it easier to work with and manage the database. It's responsible for data storage and retrieval, and for maintaining data consistency.easier to manage and maintain the application, and allows the development team to focus on developing each layer without worrying about the underlying infrastructure.
 
 # Structure explanation:
 
 ###  api/: 
 Contains the files necessary to implement the presentation layer of the architecture. 
 Includes drivers, routes, and services for contact synchronization functionality.
-
-###  database/: 
-Contains the files necessary to implement the data storage layer of the architecture. Includes database configuration, migrations and seeders.
 
 ### docker/: 
 Contains the files needed to deploy the application in containers. It includes Dockerfiles for each container needed and a docker-compose.yml file to orchestrate the containers.
@@ -60,7 +55,6 @@ File that specifies how to build the Docker image for the application.
 
 ## Requirements
 
-* [MySQL](https://www.npmjs.com/package/mysql2)
 * [NodeJS](https://nodejs.org/en/download "NodeJS")
 * [Docker](https://docs.docker.com/engine/install/ubuntu/)
 * [Typescript](https://www.npmjs.com/package/typescript)
@@ -93,9 +87,6 @@ A strongly-typed superset of JavaScript that provides additional features such a
 * Winston: 
 A versatile logging library for Node.js. It will be used to log server events and errors to different transports (such as console, file, or third-party services) for debugging and monitoring purposes.
 
-* Body-parser: 
-A middleware that extracts the request body of HTTP requests. It will be used to parse incoming request bodies in JSON format for easier handling.
-
 * Cors: 
 A middleware that enables Cross-Origin Resource Sharing (CORS) in the server. It will be used to allow requests from different domains or origins to access the API endpoints in this project.
 
@@ -104,12 +95,6 @@ A minimalist web framework for Node.js. It will be used to create the API endpoi
 
 * Helmet: 
 A middleware that provides security features for Express. It will be used to add headers and prevent common web vulnerabilities, such as XSS and CSRF.
-
-* Mysql2: 
-A MySQL client for Node.js. It will be used to connect to and interact with the MySQL database used in this project.
-
-* TypeORM: 
-An ORM that enables developers to interact with databases using an object-oriented approach. It will be used to write database queries and manage the schema of the MySQL database used in this project.
 
 ## To run development mode
 
