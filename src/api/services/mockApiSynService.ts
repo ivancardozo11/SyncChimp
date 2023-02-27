@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Contact } from '../types/contacts';
 import { SyncedContacts } from '../types/syncedContacts';
-import { addMembersToList, createList, getMembersFromList } from './mailchimpService';
+import { addMembersToList, createList, getMembersFromList } from './mailchimpSyncContactsService';
 
 let listId: string;
 
