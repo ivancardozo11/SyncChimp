@@ -1,35 +1,35 @@
 import axios from 'axios';
-import mailchimpService from './mailchimp';
 import { Contact } from '../types/contacts';
 import { SyncedContacts } from '../types/syncedContacts';
+import { addMembersToList, createList, getMembersFromList } from './mailchimp';
 
-const syncService = async (): Promise<SyncedContacts> => {
+let listId: string;
+
+export async function syncContacts(): Promise<SyncedContacts> {
   try {
-    const { data: contacts } = await axios.get<Contact[]>('https://challenge.trio.dev/api/v1/contacts');
+    // Retrieve contacts from MockAPI
+    const response = await axios.get<Contact[]>('MOCK_API_URL');
 
-    const members = contacts.map(({ firstName, lastName, email }) => ({
-      email_address: email,
-      status: 'subscribed',
-      merge_fields: {
-        FNAME: firstName,
-        LNAME: lastName,
-      },
-    }));
+    if (!listId) {
+      // Create a new list in Mailchimp
+      const listName = 'Name of developer';
+      listId = await createList(listName);
+    }
 
-    const newMembers = await mailchimpService.addMembersToList(members);
+    // Add contacts to Mailchimp list
+    const addedCount = await addMembersToList(listId, response.data);
 
-    return {
-      syncedContacts: newMembers.total_created,
-      contacts: newMembers.new_members.map((member: any) => ({
-        email: member.email_address,
-        firstName: member.merge_fields.FNAME,
-        lastName: member.merge_fields.LNAME,
-      })),
+    // Get all members from Mailchimp list
+    const contacts = await getMembersFromList(listId);
+
+    // Return the synced contacts
+    const syncedContacts: SyncedContacts = {
+      syncedContacts: addedCount,
+      contacts
     };
+    return syncedContacts;
   } catch (error) {
     console.error(error);
     throw new Error('Error syncing contacts');
   }
-};
-
-export default syncService;
+}

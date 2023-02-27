@@ -170,7 +170,9 @@ See `Dockerfile` and `docker-compose.yml` for more details.
 
 │   │   │   ├── syncService.ts
 
-│   │   │   └── mailchimp.ts
+│   │   │   ├── syncService.ts
+
+│   │   │   └── listRecreationService.ts
 
 │   │   ├── types/
 

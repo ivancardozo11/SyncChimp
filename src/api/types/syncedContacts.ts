@@ -1,13 +1,6 @@
-interface SyncedContact {
-    email: string;
-    firstName:string;
-    lastName:string;
+import { Contact } from './contacts';
+
+export interface SyncedContacts {
+  syncedContacts: number;
+  contacts: Contact[];
 }
-
-interface SyncedContacts  {
-    syncedContacts: number;
-    contacts: SyncedContact[];
-
-}
-
-export { SyncedContact, SyncedContacts };
