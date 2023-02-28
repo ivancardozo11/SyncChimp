@@ -57,7 +57,7 @@ File that specifies how to build the Docker image for the application.
 
 * [NodeJS](https://nodejs.org/en/download "NodeJS")
 * [Docker](https://docs.docker.com/engine/install/ubuntu/)
-* [Typescript](https://www.npmjs.com/package/typescript)
+* [Javascript](https://www.npmjs.com/package/javascript)
 
 # Dependencies description in this project
 
@@ -75,14 +75,6 @@ A JavaScript linter that helps to enforce consistent style and good practices in
 * Supertest: 
 A library that provides a high-level abstraction for testing HTTP requests. It will be used in combination with Jest to write integration tests for the API endpoints in this project.
 
-* TS-Jest: 
-A TypeScript preprocessor for Jest. It will be used to enable Jest to run and test TypeScript code.
-
-* Ts-node: 
-A TypeScript execution environment and REPL for Node.js. It will be used to compile and execute TypeScript code in the development environment.
-
-* Typescript:
-A strongly-typed superset of JavaScript that provides additional features such as static typing, class and interface definitions, and decorators. It will be used to write the code in this project, which will be compiled to JavaScript for execution.
 
 * Winston: 
 A versatile logging library for Node.js. It will be used to log server events and errors to different transports (such as console, file, or third-party services) for debugging and monitoring purposes.
@@ -156,7 +148,7 @@ See `Dockerfile` and `docker-compose.yml` for more details.
 
 │   │   ├── controllers/
 
-│   │   │   └── syncController.ts
+│   │   │   └── syncController.js
 
 │   │   ├── routes/
 
@@ -164,25 +156,25 @@ See `Dockerfile` and `docker-compose.yml` for more details.
 
 │   │   │   │   ├── v1/
 
-│   │   │   │   │   └── routes.ts
+│   │   │   │   │   └── routes.js
 
 │   │   ├── services/
 
-│   │   │   ├── syncService.ts
+│   │   │   ├── listRecreationService.js
 
-│   │   │   ├── syncService.ts
+│   │   │   ├── mailchimpSyncContactsService.js
 
-│   │   │   └── listRecreationService.ts
+│   │   │   └── mockApiSyncService.js
 
 │   │   ├── types/
 
-│   │   │   ├── syncedContacts.ts
+│   │   │   ├── syncedContacts.js
 
-│   │   │   └── contacts.ts
+│   │   │   └── contacts.js
 
 │   ├── database/
 
-│   │   └── config.ts
+│   │   └── config.js
 
 │   ├── docker/
  
@@ -196,7 +188,7 @@ See `Dockerfile` and `docker-compose.yml` for more details.
 
 │   │   ├── api/
 
-│   │   │   └── sync.test.ts
+│   │   │   └── sync.test.js
 
 ├── .dockerignore
 
@@ -204,11 +196,11 @@ See `Dockerfile` and `docker-compose.yml` for more details.
 
 ├── Dockerfile
 
-├── index.ts
+├── index.js
 
 ├── LICENSE
 
-├── mailchimp.config.ts
+├── mailchimp.config.js
 
 ├── package.json
 

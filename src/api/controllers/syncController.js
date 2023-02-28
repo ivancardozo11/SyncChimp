@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import syncService from '../services/mockApiSynService';
+import syncService from '../services/mockApiSyncService';
 
 const syncContacts = async (req: Request, res: Response) => {
   try {
