@@ -1,13 +1,11 @@
 import axios from 'axios';
-import { Contact } from '../types/contacts';
-import { SyncedContacts } from '../types/syncedContacts';
-import { addMembersToList, getMembersFromList } from './mailchimpSyncContactsService';
-import { recreateList } from './listRecreationService';
+import { addMembersToList, getMembersFromList } from './mailchimpSyncContactsService.js';
+import { recreateList } from './listRecreationService.js';
 
-export async function syncContacts(): Promise<SyncedContacts> {
+async function syncContactsFromMockApi() {
   try {
     // Retrieve contacts from MockAPI
-    const response = await axios.get<Contact[]>('MOCK_API_URL');
+    const response = await axios.get('https://${process.env.MOCK_API_URL');
 
     // Recreate list with the necessary name if it does not exist or if it has a different name
     const listId = await recreateList('Ivan Cardozo');
@@ -19,7 +17,7 @@ export async function syncContacts(): Promise<SyncedContacts> {
     const contacts = await getMembersFromList(listId);
 
     // Return the synced contacts
-    const syncedContacts: SyncedContacts = {
+    const syncedContacts = {
       syncedContacts: addedCount,
       contacts
     };
@@ -29,3 +27,5 @@ export async function syncContacts(): Promise<SyncedContacts> {
     throw new Error('Error syncing contacts');
   }
 }
+
+export default syncContactsFromMockApi ;

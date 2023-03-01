@@ -1,7 +1,5 @@
-import { lists } from '@mailchimp/mailchimp_marketing';
-import { Contact } from '../types/contacts';
-import { SyncedContacts } from '../types/syncedContacts';
-import { recreateList } from './listRecreationService';
+import lists  from '@mailchimp/mailchimp_marketing';
+import { recreateList } from './listRecreationService.js';
 
 /**
  * Add the given member to the Mailchimp list with the given ID.
@@ -10,7 +8,7 @@ import { recreateList } from './listRecreationService';
  * @param member The member to add to the Mailchimp list.
  * @returns The number of members added to the Mailchimp list.
  */
-async function addMembersToList(listId: string, members: Contact[]): Promise<number> {
+async function addMembersToList(listId, members) {
   let addedCount = 0; // Inicializar el contador de miembros añadidos a cero
   
   // Recorrer cada miembro en la lista de miembros a agregar
@@ -35,29 +33,14 @@ async function addMembersToList(listId: string, members: Contact[]): Promise<num
   return addedCount; // Devolver el número total de miembros añadidos
 }
 
-
 /**
  * Get the list of members from the Mailchimp list with the given ID.
  * 
  * @param listId The ID of the Mailchimp list to get members from.
  * @returns The list of members from the Mailchimp list.
  */
-
-interface ListMemberInfoResponse {
-  members: {
-    email_address: string;
-    status: string;
-    merge_fields: {
-      FNAME: string;
-      LNAME: string;
-    };
-  }[];
-}
-
-async function getMembersFromList(listId: string): Promise<Contact[]> {
-  const response = await lists.getListMembersInfo(listId) 
-
-
+async function getMembersFromList(listId) {
+  const response = await lists.getListMembersInfo(listId);
   return response.members.map((member) => {
     return {
       firstName: member.merge_fields.FNAME,
@@ -67,12 +50,6 @@ async function getMembersFromList(listId: string): Promise<Contact[]> {
   });
 }
 
-
-
-
-
-
-
 /**
  * Synchronize the contacts from the given list with the Mailchimp list.
  * 
@@ -80,7 +57,7 @@ async function getMembersFromList(listId: string): Promise<Contact[]> {
  * @param listName The name of the list to use in Mailchimp.
  * @returns The number of synced contacts and the list of contacts in the Mailchimp list.
  */
-export async function syncContacts(contacts: Contact[], listName: string): Promise<SyncedContacts> {
+export async function syncContactsToMailchimp(contacts, listName) {
   const listId = await recreateList(listName); // Recreate the list if necessary and get the ID of the list
 
   let addedCount = 0;
@@ -88,10 +65,12 @@ export async function syncContacts(contacts: Contact[], listName: string): Promi
     addedCount += await addMembersToList(listId, member);
   }
 
-  const syncedContacts: SyncedContacts = {
+  const syncedContacts = {
     syncedContacts: addedCount, // The number of synced contacts
     contacts: await getMembersFromList(listId) // The list of contacts in the Mailchimp list
   };
 
   return syncedContacts; // Return the synced contacts
 }
+
+export { addMembersToList, getMembersFromList };
