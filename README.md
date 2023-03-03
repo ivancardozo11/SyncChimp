@@ -166,37 +166,24 @@ See `Dockerfile` and `docker-compose.yml` for more details.
 
 │   │   │   └── mockApiSyncService.js
 
-│   │   ├── types/
-
-│   │   │   ├── syncedContacts.js
-
-│   │   │   └── contacts.js
-
-│   ├── database/
-
-│   │   └── config.js
-
-│   ├── docker/
- 
-│   │   ├── api/
-
-│   │   │   └── Dockerfile 
-
-│   │   ├── docker-compose.yml
-
 │   ├── tests/
 
 │   │   ├── api/
 
 │   │   │   └── sync.test.js
 
+├── .env
+
 ├── .dockerignore
+
 
 ├── .gitignore
 
 ├── Dockerfile
 
 ├── index.js
+
+├── jest.config.js
 
 ├── LICENSE
 

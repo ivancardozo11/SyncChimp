@@ -1,6 +1,5 @@
 import mailchimp from '@mailchimp/mailchimp_marketing';
 import express from 'express';
-import helmet from 'helmet';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import cors from 'cors';
@@ -8,10 +7,10 @@ import router from './src/api/routes/api/v1/routes.js';
 
 dotenv.config();
 
+
 const app = express();
 
 app.use(cors());
-app.use(helmet());
 app.use(morgan('dev'));
 
 // Set up Mailchimp configuration
