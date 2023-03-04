@@ -103,13 +103,12 @@ async function addMembersToList(listId, contacts) {
     // Log the number of members added (if any) and return the count
 const addedCount = response.add_count || 0;
 
-// Generate the response object containing the number of synced contacts and their details
-const syncedContacts = generateSyncedContactsResponse(addedCount, existingMembers);
-
 // Log the synced contacts response object and return it
 console.log(`Successfully added ${addedCount} new contacts as audience members. Formatted: ${formattedCount}, Existing in mailchimp: ${existingCount}`);
-console.log(syncedContacts);
-return syncedContacts;
+return {
+  existingMembers: existingMembers,
+  addedCount: addedCount
+};
 } catch (error) {
   // If an error occurs, log the details and throw an exception
   if (error.response) {
@@ -127,5 +126,6 @@ return syncedContacts;
   export {
   addMembersToList,
   getExistingMembers,
-  createMemberObject
+  createMemberObject,
+  generateSyncedContactsResponse
   };
