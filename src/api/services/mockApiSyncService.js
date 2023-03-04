@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { addMembersToList } from './mailchimpSyncContactsService.js';
+import { addMembersToList, generateSyncedContactsResponse } from './mailchimpSyncContactsService.js';
 import { recreateList } from './listRecreationService.js';
 
 async function syncContactsFromMockApi() {
@@ -18,12 +18,21 @@ async function syncContactsFromMockApi() {
       throw new Error('Failed to recreate list in Mailchimp.');
     }
 
-    // Add contacts to Mailchimp list
-    const addedCount = await addMembersToList(listId, response.data);
+    // Add contacts to Mailchimp list if there are
+    const syncedMembers = await addMembersToList(listId, response.data);
    
-    if (!addedCount) {
+    if (!syncedMembers) {
       throw new Error('Failed to add contacts to Mailchimp list.');
     }
+    // Generate the synced contacts response object
+    const syncedContacts = generateSyncedContactsResponse(syncedMembers.addedCount, syncedMembers.existingMembers);
+
+    if (!syncedContacts) {
+      throw new Error('Failed to generate synced contacts response.');
+    }
+    // Return the synced contacts response object
+    return syncedContacts;
+
   } catch (error) {
     console.error(error);
     throw new Error('Error syncing contacts');

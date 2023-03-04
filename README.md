@@ -104,6 +104,14 @@ Use following command to start project on staging and production environments:
 npm start
 ```
 
+Trigger the endpoint GET contacts/sync on local:
+
+```sh
+http://localhost:3000/api/v1/contacts/sync
+```
+
+*This will create a Synchronization with the backend and will fetch the mock api contact list and will format to a JSON structure*
+
 See `package.json` for more details.
 
 ## Tests
