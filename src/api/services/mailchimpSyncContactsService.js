@@ -124,6 +124,8 @@ return {
   
   // Export the necessary functions for external use
   export {
+  getExistingMembers,
+  createMemberObject,
   addMembersToList,
   generateSyncedContactsResponse
   };
