@@ -6,8 +6,8 @@ const syncContacts = async (req, res) => {
     const syncedContacts = await syncService();
 
     const response = {
-      syncedContacts: syncedContacts.contacts.length,
-      contacts: syncedContacts.contacts,
+      syncedContacts: syncedContacts.syncedMembers.contacts.length,
+      contacts: syncedContacts.syncedMembers.contacts,
     };
 
     const json = JSON.stringify(response);
