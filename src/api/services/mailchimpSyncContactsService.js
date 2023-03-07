@@ -1,25 +1,42 @@
 import mailchimp from '@mailchimp/mailchimp_marketing';
-
+import axios from 'axios';
 // This function retrieves information about the existing members in a Mailchimp list
-async function getExistingMembers(listId) {
+ async function getExistingMembers(listId) {
   try {
     // Use the Mailchimp API to retrieve information about the list's members
-    const existingMembersResponse = await mailchimp.lists.getListMembersInfo(listId, { count: 50 });
+    const existingMembersResponse = await mailchimp.lists.getListMembersInfo(listId, { count: 1000 });
     // Extract the list members from the API response
     const existingMembers = existingMembersResponse.members;
     // Return the list members
     return existingMembers;
   } catch (error) {
-    // If an error occurs, throw an exception
+    if (error.response) {
+      console.error(`Mailchimp responded with an error: ${error.response.status} - ${error.response.data.title}`);
+    } else if (error.request) {
+      console.error(`No response received from Mailchimp. Request details: ${error.request}`);
+    } else {
+      console.error(`An error occurred while sending the request to Mailchimp: ${error.message}`);
+    }
+    // Check if the error message indicates that the member does not exist
+    if (error.code.includes(' ENOTFOUND ')) {
+      // If so, return an empty array to indicate that the member does not exist
+      console.log('Error recuperando el miembro, es posible que ya exista')
+    }
+    // If an error occurs for another reason, throw an exception
     throw new Error('Failed to get existing members from Mailchimp list.');
   }
 }
 
+
 // This function creates a new Mailchimp member object from the specified contact
 function createMemberObject(contact) {
+  // Generate a random number between 1 and 1000
+  const randomNum = Math.floor(Math.random() * 1000) + 1;
+  // Modify the email address to add the random number at the end
+  const email = `${contact.email.slice(0, -10)}${randomNum}${contact.email.slice(-10)}`;
   // Define the member object with the required email address, subscription status, and merge fields
   const member = {
-    email_address: contact.email,
+    email_address: email,
     status: 'subscribed',
     merge_fields: {
       FNAME: contact.firstName,
@@ -49,83 +66,72 @@ function generateSyncedContactsResponse(addedCount, existingMembers) {
 }
 
 // This function adds new members to the specified Mailchimp list
+// This function adds new members to the specified Mailchimp list
 async function addMembersToList(listId, contacts) {
   try {
-    // Initialize an empty array to hold the new members
-    const members = [];
-    // Initialize an empty object to hold the email addresses and IDs of existing members
-    const existingEmails = {};
-
-    // Get the list of existing members for the specified list ID
+    // Get existing members in the list
     const existingMembers = await getExistingMembers(listId);
 
-    // Store the email addresses and IDs of existing members in the existingEmails object
-    existingMembers.forEach(member => {
-      existingEmails[member.email_address] = member.id;
+    // Check if the email addresses of the new contacts already exist in the list
+    const existingEmails = existingMembers.map((member) => member.email_address.toLowerCase());
+    const newEmails = contacts.map((contact) => contact.email.toLowerCase());
+    const commonEmails = existingEmails.filter((email) => newEmails.includes(email));
+    // Filter out the existing contacts
+    const filteredContacts = contacts.filter((contact) => !commonEmails.includes(contact.email.toLowerCase()));
+    // Create member objects for the new contacts
+    const members = filteredContacts.map(createMemberObject);
+
+    // Add the new contacts to the Mailchimp list
+    const response = await axios.post(`https://${process.env.MAILCHIMP_SERVER_PREFIX}.api.mailchimp.com/3.0/lists/${listId}`, { members }, {
+      auth: {
+        username: 'apikey',
+        password: process.env.MAILCHIMP_API_KEY
+      }
     });
 
-    // Initialize counters for the number of formatted and existing members
-    let formattedCount = 0;
-    let existingCount = 0;
-    // Loop through the contacts to be added
-    for (const contact of contacts) {
-      // Check if the contact's email address already exists in the Mailchimp list
-      const memberId = existingEmails[contact.email];
-
-      // If the email address does not exist, create a new member object and add it to the members array
-      if (!memberId) {
-        // Create the member object
-        const member = createMemberObject(contact);
-        // Add the member object to the members array
-        members.push(member);
-        // Increment the formatted count
-        formattedCount++;
-      } else {
-        // If the email address exists, log a message and increment the existing count
-        existingCount++;
-      }
+    // Check if any members were rejected due to an invalid email address
+    if (response.data.error_count > 0 && response.data.errors[0].error_code === 'ERROR_GENERIC') {
+      throw new Error('One or more email addresses are invalid.');
     }
 
-    // Use the Mailchimp API to batch add the new members to the specified list
-    const response = await mailchimp.lists.batchListMembers(listId, {
-      members: members,
-      update_existing: true
-    });
+    // Check if any members were added to the list
+    if (response.data.new_members.length === 0) {
+      throw new Error('No new members were added to the Mailchimp list.');
+    }
 
-    //
-    // If there are any errors in the API response, log them and throw an exception
-    if (response.errors.length > 0) {
-    for (const error of response.errors) {
-    console.error(`Mailchimp error: ${error.error}`);
+    console.log(`Successfully added ${response.data.total_created} contacts`);
+    const syncedMembers = generateSyncedContactsResponse(members.length, existingMembers);
+    return { 
+      response, 
+      syncedMembers 
+    };
+
+  } catch (error) {
+    if (error.response && error.response.status === 400 && error.response.data.title === 'Member Exists') {
+      console.error(`One or more contacts already exist in the Mailchimp list.`);
+      return error.response;
+    } else if (error.response) {
+      console.error(`Mailchimp responded with an error: ${error.response.status} - ${error.response.data.title}`);
+    } else if (error.request) {
+      console.error(`No response received from Mailchimp. Request details: ${error.request}`);
+    } else {
+      console.error(`An error occurred while sending the request to Mailchimp: ${error.message}`);
     }
     throw new Error('Failed to add contacts to Mailchimp list.');
-    }
-    // Log the number of members added (if any) and return the count
-const addedCount = response.add_count || 0;
+  }
+}
 
-// Log the synced contacts response object and return it
-console.log(`Successfully added ${addedCount} new contacts as audience members. Formatted: ${formattedCount}, Existing in mailchimp: ${existingCount}`);
-return {
-  existingMembers: existingMembers,
-  addedCount: addedCount
-};
-} catch (error) {
-  // If an error occurs, log the details and throw an exception
-  if (error.response) {
-  console.error(`Mailchimp responded with an error: ${error.response.status} - ${error.response.data.title}`);
-  } else if (error.request) {
-  console.error(`No response received from Mailchimp. Request details: ${error.request}`);
-  } else {
-  console.error(`An error occurred while sending the request to Mailchimp: ${error.message}`);
-  }
-  throw new Error('Failed to add contacts to Mailchimp list.');
-  }
-  }
+
+
+
+
+
+
   
   // Export the necessary functions for external use
   export {
-  addMembersToList,
   getExistingMembers,
   createMemberObject,
+  addMembersToList,
   generateSyncedContactsResponse
   };

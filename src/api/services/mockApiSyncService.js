@@ -24,14 +24,7 @@ async function syncContactsFromMockApi() {
     if (!syncedMembers) {
       throw new Error('Failed to add contacts to Mailchimp list.');
     }
-    // Generate the synced contacts response object
-    const syncedContacts = generateSyncedContactsResponse(syncedMembers.addedCount, syncedMembers.existingMembers);
-
-    if (!syncedContacts) {
-      throw new Error('Failed to generate synced contacts response.');
-    }
-    // Return the synced contacts response object
-    return syncedContacts;
+    return syncedMembers;
 
   } catch (error) {
     console.error(error);
