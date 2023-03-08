@@ -1,5 +1,7 @@
 import mailchimp from '@mailchimp/mailchimp_marketing';
 import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
+
 // This function retrieves information about the existing members in a Mailchimp list
  async function getExistingMembers(listId) {
   try {
@@ -30,10 +32,11 @@ import axios from 'axios';
 
 // This function creates a new Mailchimp member object from the specified contact
 function createMemberObject(contact) {
-  // Generate a random number between 1 and 1000
-  const randomNum = Math.floor(Math.random() * 1000) + 1;
-  // Modify the email address to add the random number at the end
-  const email = `${contact.email.slice(0, -10)}${randomNum}${contact.email.slice(-10)}`;
+  // Generate a unique identifier
+  const id = uuidv4();
+  // Extract the last 6 characters of the identifier and append them to the domain name
+  const domain = contact.email.split('@')[1];
+  const email = `${id.slice(-6)}@${domain}`;
   // Define the member object with the required email address, subscription status, and merge fields
   const member = {
     email_address: email,
@@ -122,12 +125,6 @@ async function addMembersToList(listId, contacts) {
 }
 
 
-
-
-
-
-
-  
   // Export the necessary functions for external use
   export {
   getExistingMembers,
