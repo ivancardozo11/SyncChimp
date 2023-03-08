@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "SyncChimp syncs contacts from MockAPI to Mailchimp. It retrieves contact data from MockAPI and creates new members in a new Mailchimp list. Keep your email lists updated in real-time with SyncChimp.",
   "type": "module",
-  "main": "index.js",
+  "main": "./index.js",
   "scripts": {
     "start": "node index.js",
+    "build": "webpack --mode production",
     "dev": "nodemon index.js",
     "test": "jest --detectOpenHandles --no-cache --watchAll"
   },
@@ -24,11 +25,14 @@
     "@babel/core": "^7.21.0",
     "@babel/preset-env": "^7.20.2",
     "@babel/register": "^7.21.0",
+    "babel-loader": "^9.1.2",
     "dotenv": "^16.0.3",
     "jest": "^29.4.3",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.20",
     "standard": "^17.0.0",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
     "winston": "^3.8.2"
   },
   "dependencies": {
@@ -37,6 +41,7 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "uuidv4": "^6.2.13",
+    "webpack-node-externals": "^3.0.0",
     "winston-daily-rotate-file": "^4.7.1"
   },
   "eslintConfig": {
