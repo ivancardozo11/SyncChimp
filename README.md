@@ -29,9 +29,6 @@ Contains the application logic that processes user requests. It communicates wit
 Contains the files necessary to implement the presentation layer of the architecture. 
 Includes drivers, routes, and services for contact synchronization functionality.
 
-### docker/: 
-Contains the files needed to deploy the application in containers. It includes Dockerfiles for each container needed and a docker-compose.yml file to orchestrate the containers.
-
 ### tests/: 
 Contains the files needed for automated testing of the application. It includes tests of the presentation layer and the data storage layer.
 
@@ -43,9 +40,6 @@ File containing the project documentation.
 
 ### package.json: 
 NPM configuration file that specifies the dependencies and scripts of the project.
-
-### tsconfig.json: 
-A TypeScript configuration file that specifies how to compile TypeScript code into JavaScript.
 
 ### Dockerfile: 
 File that specifies how to build the Docker image for the application.
@@ -71,10 +65,6 @@ A tool that watches for file changes and automatically restarts the Node.js serv
 
 * Standard: 
 A JavaScript linter that helps to enforce consistent style and good practices in the code. It will be used to ensure that the code in this project adheres to the Standard style and best practices.
-
-* Supertest: 
-A library that provides a high-level abstraction for testing HTTP requests. It will be used in combination with Jest to write integration tests for the API endpoints in this project.
-
 
 * Winston: 
 A versatile logging library for Node.js. It will be used to log server events and errors to different transports (such as console, file, or third-party services) for debugging and monitoring purposes.
@@ -118,7 +108,6 @@ See `package.json` for more details.
 
 Following tests libraries are used for unit/integration tests:
 * [Jest](https://www.npmjs.com/package/jest)
-* [Supertest](https://www.npmjs.com/package/supertest)
 
 
 Tests are kept next to source with following pattern *.spec.js
@@ -130,76 +119,21 @@ npm test
 ```
 
 
-## Docker container
-
-There is available Docker container and Docker Composer if you would like to run the Node.js app
+## Docker
 
 
-
-Then use following command to build Docker containers:
+To create de Docker image:
 
 ```sh
-docker-compose up -d --build
+docker build -t syncchimp .
 ```
 
-See `Dockerfile` and `docker-compose.yml` for more details.
+This will create our docker image.
 
+* Run the container
 
+```sh
+docker run -p 3000:3000 syncchimp
+```
 
-# Structure tree:
-
-
-
-├── src
-
-│   ├── api
-
-│   │   ├── controllers/
-
-│   │   │   └── syncController.js
-
-│   │   ├── routes/
-
-│   │   │   ├── api/
-
-│   │   │   │   ├── v1/
-
-│   │   │   │   │   └── routes.js
-
-│   │   ├── services/
-
-│   │   │   ├── listRecreationService.js
-
-│   │   │   ├── mailchimpSyncContactsService.js
-
-│   │   │   └── mockApiSyncService.js
-
-│   ├── tests/
-
-│   │   ├── api/
-
-│   │   │   └── sync.test.js
-
-├── .env
-
-├── .dockerignore
-
-
-├── .gitignore
-
-├── Dockerfile
-
-├── index.js
-
-├── jest.config.js
-
-├── LICENSE
-
-├── mailchimp.config.js
-
-├── package.json
-
-├── README.md
-
-└── tsconfig.json
-
+See `Dockerfile` and for more details.
