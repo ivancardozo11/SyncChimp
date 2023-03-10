@@ -12,7 +12,7 @@
 SyncChimp syncs contacts from MockAPI to Mailchimp. It retrieves contact data from MockAPI and creates new members in a new Mailchimp list. Keep your email lists updated in real-time with SyncChimp.
 
 
-# Architecture 
+# Architecture:
 
 This architecture provides a separation of concerns, making the application more modular and maintainable. In this project, this architecture is being used to create a backend system that processes requests from a user and interacts with the database to return a response.
 
@@ -56,7 +56,7 @@ This configuration file is used to transpile modern JavaScript code to be compat
 File specifies the files and directories to be ignored when building the Docker image for the application, making the image smaller and faster to build.
 
 
-## Requirements
+# Requirements:
 
 * [NodeJS](https://nodejs.org/en/download "NodeJS")
 * [Docker](https://docs.docker.com/engine/install/ubuntu/)
@@ -114,7 +114,7 @@ You have to use the following command to start a development server:
 npm install
 ```
 
-## To run development mode
+## To run development mode:
 
 You have to use the following command to start a development server:
 
@@ -135,20 +135,21 @@ Trigger the endpoint GET contacts/sync on local server:
 http://localhost:3000/api/v1/contacts/sync
 ```
 
-*This will create a synchronization with the backend and will fetch the mock api contact list and will format to a JSON structure in local mode.*
+* *This will create a synchronization with the backend and will fetch the mock api contact list and will format to a JSON structure in local mode.*
 
 See `package.json` for more details.
 
 To test the production ready code hosted in Railway:
 
 ```sh
-https://syncchimp-production.up.railway.app
+https://syncchimp-production.up.railway.app/api/v1/contacts/sync
 ```
+* *This will trigger a GET petition to the server and will initiate a syncronization between the Trio Mock API and Mailchimp API. You will receive a list of all the contacts recently synced and created. And this will show you their names.*
 
-*Make sure you have the api parser installed, and in case you dont, download:
+* *Make sure you have the api parser installed, and in case you dont, download:
 https://chrome.google.com/webstore/detail/json-formatter-viewer-and/infnlhnhibphpaljmnnadaldibggkokb*
 
-## Tests
+# Tests:
 
 Following tests libraries are used for unit/integration tests:
 * [Jest](https://www.npmjs.com/package/jest)
@@ -163,7 +164,7 @@ npm test
 ```
 
 
-## Docker
+## Docker:
 
 
 * To create de Docker image:
