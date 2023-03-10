@@ -2,6 +2,7 @@ import mailchimp from '@mailchimp/mailchimp_marketing';
 import express from 'express';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
+import helmet from 'helmet';
 import cors from 'cors';
 import router from './src/api/routes/api/v1/routes.js';
 import winston from 'winston';
@@ -54,6 +55,7 @@ app.use((err, req, res, next) => {
 
 app.use(cors());
 app.use(morgan('dev'));
+app.use(helmet());
 
 // Set up Mailchimp configuration
 mailchimp.setConfig({
