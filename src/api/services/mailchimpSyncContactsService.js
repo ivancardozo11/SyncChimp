@@ -35,11 +35,13 @@ function createMemberObject(contact) {
   // Generate a unique identifier
   const id = uuidv4();
   // Extract the last 6 characters of the identifier and append them to the domain name
-  const domain = contact.email.split('@')[1];
-  const email = `${id.slice(-6)}@${domain}`;
+  const emailParts = contact.email.split('@');
+  const username = emailParts[0];
+  const domain = emailParts[1];
+  const uniqueEmail = `${username}${id.replace(/-/g, '').slice(0, 6)}@${domain}`;
   // Define the member object with the required email address, subscription status, and merge fields
   const member = {
-    email_address: email,
+    email_address: uniqueEmail,
     status: 'subscribed',
     merge_fields: {
       FNAME: contact.firstName,
@@ -51,12 +53,12 @@ function createMemberObject(contact) {
 }
 
 // This function generates a response object containing the number of synced contacts and their details
-function generateSyncedContactsResponse(addedCount, existingMembers) {
+function generateSyncedContactsResponse(addedCount, members) {
   // Calculate the total number of synced contacts
   const syncedContacts = {
-    syncedContacts: addedCount + existingMembers.length,
+    syncedContacts: addedCount,
     // Map the existing members to a list of objects containing their first name, last name, and email address
-    contacts: existingMembers.map((member) => {
+    contacts: members.map((member) => {
       return {
         firstName: member.merge_fields.FNAME,
         lastName: member.merge_fields.LNAME,
@@ -103,7 +105,7 @@ async function addMembersToList(listId, contacts) {
     }
 
     console.log(`Successfully added ${response.data.total_created} contacts`);
-    const syncedMembers = generateSyncedContactsResponse(members.length, existingMembers);
+    const syncedMembers = generateSyncedContactsResponse(members.length, members);
     return { 
       response, 
       syncedMembers 
