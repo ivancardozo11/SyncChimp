@@ -62,9 +62,10 @@ File specifies the files and directories to be ignored when building the Docker 
 * [Docker](https://docs.docker.com/engine/install/ubuntu/)
 * [Javascript](https://www.npmjs.com/package/javascript)
 
-# Dependencies description in this project
+# Dependencies description in this project:
 
-* Jest: A testing library for JavaScript code. It will be used to write unit and integration tests to ensure the quality and correctness of the code in this project.
+* Jest: 
+A testing library for JavaScript code. It will be used to write unit and integration tests to ensure the quality and correctness of the code in this project.
 
 * Morgan: 
 A middleware that logs HTTP requests and responses for Node.js. It will be used to log incoming requests and responses in the server's console for debugging and monitoring purposes.
@@ -98,15 +99,19 @@ A Babel preset that automatically determines the Babel plugins needed based on t
 
 * dotenv: A zero-dependency module that loads environment variables from a .env file into process.env. It will be used to store sensitive information like API keys and database credentials.
 
-* mailchimp/mailchimp_marketing: The official Node.js client library for the Mailchimp API. It will be used to interact with the Mailchimp API and create new contacts.
+* mailchimp/mailchimp_marketing: 
+The official Node.js client library for the Mailchimp API. It will be used to interact with the Mailchimp API and create new contacts.
 
-* axios: A promise-based HTTP client for Node.js and the browser. It will be used to make HTTP requests to external APIs.
+* axios: 
+A promise-based HTTP client for Node.js and the browser. It will be used to make HTTP requests to external APIs.
 
-* uuidv4: A library for generating random UUIDs. It will be used to create unique IDs for new contacts.
+* uuidv4: 
+A library for generating random UUIDs. It will be used to create unique IDs for new contacts.
 
-* winston-daily-rotate-file: A transport for the Winston logging library that rotates log files based on a customizable schedule. It will be used to store logs in a rotating file and prevent the log file from growing too large.
+* winston-daily-rotate-file: 
+A transport for the Winston logging library that rotates log files based on a customizable schedule. It will be used to store logs in a rotating file and prevent the log file from growing too large.
 
-## Before start, to use the project locally install npm:
+## Before start, to use the project locally install npm dependencies:
 
 You have to use the following command to start a development server:
 
@@ -123,13 +128,13 @@ npm run dev
 ```
 
 
-To run the code in production mode locally:
+## To run the code in production mode locally:
 
 ```sh
 npm start
 ```
 
-Trigger the endpoint GET contacts/sync on local server:
+## Trigger the endpoint GET contacts/sync on local server:
 
 ```sh
 http://localhost:3000/api/v1/contacts/sync
@@ -139,7 +144,7 @@ http://localhost:3000/api/v1/contacts/sync
 
 See `package.json` for more details.
 
-To test the production ready code hosted in Railway:
+## To test the production ready code hosted in Railway:
 
 ```sh
 https://syncchimp-production.up.railway.app/api/v1/contacts/sync
@@ -164,7 +169,7 @@ npm test
 ```
 
 
-## Docker:
+# Docker:
 
 
 * To create de Docker image:
