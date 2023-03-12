@@ -186,7 +186,8 @@ This will create our docker image.
 docker run -p 3000:3000 syncchimp
 ```
 
-See `Dockerfile` and for more details.
+See `Dockerfile` for more details.
 
-Google docs documentation:
+SyncChimp technical design document:
 
+https://docs.google.com/document/d/e/2PACX-1vTLj4hmftoaMoSIKMQBmB7ZkLzC1Za-dVvzkarE1cuH8KtH_TpenieUoQDz4EtjjnBtU4ckezr8R2eW/pub
