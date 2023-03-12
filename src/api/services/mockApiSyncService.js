@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { addMembersToList, generateSyncedContactsResponse } from './mailchimpSyncContactsService.js';
+import { addMembersToList} from './mailchimpSyncContactsService.js';
 import { recreateList } from './listRecreationService.js';
 
 async function syncContactsFromMockApi() {
