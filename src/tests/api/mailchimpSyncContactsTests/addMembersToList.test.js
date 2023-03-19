@@ -3,6 +3,14 @@ import mailchimp from '@mailchimp/mailchimp_marketing';
 import dotenv from 'dotenv';
 dotenv.config();
 
+/*
+The test imports a function called addMembersToList from the mailchimpSyncContactsService module and uses the @mailchimp/mailchimp_marketing 
+library to perform Mailchimp operations. It configures Mailchimp with the API key and server prefix from environment variables, 
+creates a new contact object with a randomly generated email, first name, and last name, and then adds the contact to the Mailchimp 
+list specified by the first list returned by mailchimp.lists.getAllLists(). 
+It asserts that the response status is 200 and that the new member was added to the list with the correct email, first name, and last name.
+*/
+
 const apiKey = process.env.MAILCHIMP_API_KEY;
 const serverPrefix = process.env.MAILCHIMP_SERVER_PREFIX;
 
