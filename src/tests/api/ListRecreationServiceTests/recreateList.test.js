@@ -7,7 +7,19 @@ jest.mock("@mailchimp/mailchimp_marketing");
 dotenv.config();
 const apiKey = process.env.MAILCHIMP_API_KEY;
 const serverPrefix = process.env.MAILCHIMP_SERVER_PREFIX;
+/*
+This test file imports necessary modules such as Mailchimp API, dotenv and a function called recreateList from listRecreationService.js. 
+It then sets up mock functions and configures the API key and server prefix. The test suite describe is set to test the recreateList function.
 
+The first test case is checking if a new list is created when it doesn't exist. 
+It sets mock responses for the getAllLists and createList functions from Mailchimp API. 
+The test case then calls the recreateList function and expects the mock functions to have been called and the output to equal the mocked response.
+
+The second test case checks if an existing list is used when it exists. 
+It sets a mock response for getAllLists function from Mailchimp API. 
+The test case then calls the recreateList function and expects the getAllLists function to have been called once, 
+createList function not to have been called, and the output to equal the existing list's ID.
+*/
 mailchimp.setConfig({
   apiKey: apiKey,
   server: `${serverPrefix}`
