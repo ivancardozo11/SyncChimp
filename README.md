@@ -191,3 +191,10 @@ See `Dockerfile` for more details.
 # SyncChimp technical design document:
 
 https://docs.google.com/document/d/e/2PACX-1vTLj4hmftoaMoSIKMQBmB7ZkLzC1Za-dVvzkarE1cuH8KtH_TpenieUoQDz4EtjjnBtU4ckezr8R2eW/pub
+
+
+# See Youtube hosted code demo:
+
+https://www.youtube.com/watch?v=4wNcvj3CJDc
+
+
